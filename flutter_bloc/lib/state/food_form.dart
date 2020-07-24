@@ -1,4 +1,8 @@
+import 'package:blocflutter/bloc/food_bloc.dart';
+import 'package:blocflutter/events/food_events.dart';
+import 'package:blocflutter/model/food.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'food_list_screen.dart';
 
@@ -8,7 +12,6 @@ class FoodForm extends StatefulWidget {
 }
 
 class _FoodFormState extends State<FoodForm> {
-
   String _foodname;
 
   @override
@@ -21,7 +24,10 @@ class _FoodFormState extends State<FoodForm> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Learning Bloc', style: TextStyle(fontSize: 30),),
+              Text(
+                'Learning Bloc',
+                style: TextStyle(fontSize: 30),
+              ),
               SizedBox(height: 20),
               TextField(
                 decoration: InputDecoration(labelText: 'Food'),
@@ -42,24 +48,28 @@ class _FoodFormState extends State<FoodForm> {
           FloatingActionButton(
             heroTag: 'button1',
             child: Icon(Icons.save),
-            onPressed: (){},
+            onPressed: () {
+              BlocProvider.of<FoodBloc>(context).add(
+                FoodEvent.add(Food(_foodname)),
+              );
+            },
           ),
           SizedBox(height: 14),
           FloatingActionButton(
             heroTag: 'button2',
             child: Icon(Icons.navigate_next),
-            onPressed: () => Navigator.push(
-             context, MaterialPageRoute(builder: (context) => FoodListScreen()) ),
-            )
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => FoodListScreen())),
+          )
         ],
       ),
     );
   }
 }
 
-class FoodList extends StatelessWidget{
+class FoodList extends StatelessWidget {
   @override
   Widget build(Object context) {
-    return Container(child: Text("ejemplo"));
+    return FoodList();
   }
 }
